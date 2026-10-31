@@ -7,8 +7,8 @@
 
 <p align="center">
   <a href="https://github.com/Egld-Rma/Yakuza3-Recaps-Restored/releases/latest">
-    <img src="https://img.shields.io/badge/version-v1.0-blue?style=flat-square"
-         alt="Version v1.0">
+    <img src="https://img.shields.io/badge/version-v1.0.1-blue?style=flat-square"
+         alt="Version v1.0.1">
   </a>
   <img src="https://img.shields.io/badge/status-stable-brightgreen?style=flat-square"
        alt="Status stable">
@@ -93,8 +93,8 @@ This mod brings them back:
 </p>
 
 The original files are backed up in the game folder, under `recaps_backup`.
-If the game is in a protected folder, the installer offers to restart as
-administrator.
+If Windows denies access to the game folder, right-click the installer and
+choose **Run as administrator**.
 
 > Download the archives from **Releases**. The **Code → Download ZIP** button
 > does not contain the installable mod.

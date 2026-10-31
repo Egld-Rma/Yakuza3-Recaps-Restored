@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -13,10 +12,14 @@ using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
-[assembly: AssemblyTitle("Yakuza 3 Remastered - Yakuza 1 and 2 recaps installer")]
-[assembly: AssemblyProduct("The Story from Yakuza 1 and 2 - recaps restored")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyTitle("Yakuza 3 Recaps Installer")]
+[assembly: AssemblyDescription("Installs or removes the restored Yakuza 1 and 2 recaps in Yakuza 3 Remastered.")]
+[assembly: AssemblyCompany("Egld")]
+[assembly: AssemblyProduct("Yakuza 3 Recaps Restored")]
+[assembly: AssemblyCopyright("Copyright (c) 2026 Egld. MIT License.")]
+[assembly: AssemblyVersion("1.0.1.0")]
+[assembly: AssemblyFileVersion("1.0.1.0")]
+[assembly: AssemblyInformationalVersion("1.0.1")]
 
 namespace Y3Recaps
 {
@@ -229,6 +232,9 @@ namespace Y3Recaps
         {
             CheckGame(game);
             Plan p = new Plan(); p.Install = true; p.Game = game;
+            if (!Directory.Exists(ModDir))
+                throw new UserError("The mod files were not found next to the installer.\n\n" +
+                    "Extract the whole archive first (right-click > Extract All), then run the installer from the extracted folder.");
             log("Checking the mod files...");
             long total = Data.ScenarioSize, done = 0;
             foreach (long s in Data.VideoSizes) total += s;
@@ -590,14 +596,9 @@ namespace Y3Recaps
             SetBusy(false);
             if (e is UnauthorizedAccessException)
             {
-                Log("Windows denied access to the game folder.");
-                if (MessageBox.Show(this, "Windows denied access to the game folder.\n\nRestart the installer as administrator?", Text,
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    ProcessStartInfo psi = new ProcessStartInfo(Application.ExecutablePath, "\"" + Game + "\"");
-                    psi.Verb = "runas"; psi.UseShellExecute = true;
-                    try { Process.Start(psi); busy = false; Close(); } catch (Win32Exception) { }
-                }
+                Log("Windows denied access to the game folder. Nothing else was changed.");
+                MessageBox.Show(this, "Windows denied access to the game folder.\n\nClose the installer, then right-click it and choose \"Run as administrator\".",
+                    Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             string msg = e is UserError ? e.Message : "Something went wrong: " + e.Message + "\n\nThe game stays playable; run Install or Uninstall again.";
@@ -633,8 +634,7 @@ namespace Y3Recaps
 #endif
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            string initial = args.Length > 0 && Core.IsGameFolder(args[0].TrimEnd('\\')) ? args[0].TrimEnd('\\') : Core.FindSteamGame();
-            Application.Run(new MainForm(initial));
+            Application.Run(new MainForm(Core.FindSteamGame()));
             return 0;
         }
     }

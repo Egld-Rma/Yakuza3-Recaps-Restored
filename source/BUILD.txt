@@ -2,7 +2,7 @@
 ships with Windows (.NET Framework 4), nothing else is needed:
 
 C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe /optimize+
-    /win32manifest:app.manifest /r:System.Windows.Forms.dll /r:System.Drawing.dll
+    /win32manifest:app.manifest /win32icon:app.ico /r:System.Windows.Forms.dll /r:System.Drawing.dll
     "/out:Yakuza3 Recaps Installer.exe" Installer.cs Data.cs
 
 Data.cs: Regions = the places patched in Yakuza3.exe, by code address (RVA), with the original
