@@ -1,0 +1,10 @@
+"Yakuza3 Recaps Installer.exe" is built from Installer.cs and Data.cs with the C# compiler that
+ships with Windows (.NET Framework 4), nothing else is needed:
+
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe /nologo /target:winexe /optimize+
+    /win32manifest:app.manifest /r:System.Windows.Forms.dll /r:System.Drawing.dll
+    "/out:Yakuza3 Recaps Installer.exe" Installer.cs Data.cs
+
+Data.cs: Regions = the places patched in Yakuza3.exe, by code address (RVA), with the original
+bytes that must be found there and the new bytes; the other values are the SHA-256 checksums of
+the mod files and of the original / modified game files.
