@@ -64,14 +64,10 @@ This mod brings them back:
 
 ## Installation
 
-1. Download both archives from the
-   [latest release](https://github.com/Egld-Rma/Yakuza3-Recaps-Restored/releases/latest):
-   `Yakuza3_Recaps_Yakuza1and2_part1.zip` and
-   `Yakuza3_Recaps_Yakuza1and2_part2.zip`
-   (the mod is split in two because of GitHub's file size limit).
+1. Download `Yakuza3_Recaps_Yakuza1and2.zip` from the
+   [latest release](https://github.com/Egld-Rma/Yakuza3-Recaps-Restored/releases/latest).
 
-2. Extract **both** archives into the same place: they fill the same
-   `Yakuza3_Recaps_Yakuza1and2` folder.
+2. Extract the archive anywhere (right-click → **Extract All**).
 
 3. Close *Yakuza 3 Remastered*.
 

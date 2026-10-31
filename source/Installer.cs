@@ -239,7 +239,7 @@ namespace Y3Recaps
             {
                 if (!File.Exists(files[i]) || new FileInfo(files[i]).Length != sizes[i] || Sha256(files[i], progress, ref done, total) != shas[i])
                     throw new UserError("A mod file is missing or damaged:\n" + files[i].Substring(ModDir.Length - 3) +
-                        "\n\nIf you downloaded the mod in two parts, extract both into the same folder, then try again.");
+                        "\n\nExtract the whole archive again (or download it again if it is damaged), then try again.");
             }
 
             log("Checking the game...");
