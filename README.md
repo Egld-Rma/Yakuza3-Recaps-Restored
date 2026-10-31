@@ -1,5 +1,12 @@
 <p align="center">
   <a href="https://github.com/Egld-Rma/Yakuza3-Recaps-Restored/releases/latest">
+    <img src="screenshots/title_menu.jpg"
+         alt="Title menu with The Story from Yakuza and The Story from Yakuza 2" width="900">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Egld-Rma/Yakuza3-Recaps-Restored/releases/latest">
     <img src="https://img.shields.io/badge/version-v1.0-blue?style=flat-square"
          alt="Version v1.0">
   </a>
