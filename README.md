@@ -7,8 +7,8 @@
 
 <p align="center">
   <a href="https://github.com/Egld-Rma/Yakuza3-Recaps-Restored/releases/latest">
-    <img src="https://img.shields.io/badge/version-v1.0.1-blue?style=flat-square"
-         alt="Version v1.0.1">
+    <img src="https://img.shields.io/badge/version-v1.1-blue?style=flat-square"
+         alt="Version v1.1">
   </a>
   <img src="https://img.shields.io/badge/status-stable-brightgreen?style=flat-square"
        alt="Status stable">
@@ -71,63 +71,64 @@ This mod brings them back:
 
 ## Installation
 
-1. Download `Yakuza3_Recaps_Yakuza1and2.zip` from the
+1. Download `Yakuza3_Recaps_v1.1.zip` from the
    [latest release](https://github.com/Egld-Rma/Yakuza3-Recaps-Restored/releases/latest).
 
 2. Extract the archive anywhere (right-click → **Extract All**).
 
-3. Close *Yakuza 3 Remastered*.
+3. Open your game folder, the one that contains `Yakuza3.exe`
+   (Steam: right-click the game → **Manage** → **Browse local files**).
 
-4. Run `Yakuza3 Recaps Installer.exe`.
+4. Copy `version.dll` and the `data` folder into it. When Windows asks, choose
+   **Replace the files in the destination**.
 
-5. A Steam copy is found automatically. For any other copy, click
-   **Browse...** and select `Yakuza3.exe` in your game folder.
+5. Start the game: the two new options are in the title menu.
 
-6. Click **Install**. The installer checks everything first, lists what it is
-   going to change and asks before doing anything.
+No installer, nothing to run: the game loads the mod by itself.
 
-7. Start the game: the two new options are in the title menu.
+> If the new options show up but the recaps do not play, the files in `data`
+> were skipped: copy the `data` folder again and choose **Replace**.
 
-<p align="center">
-  <img src="screenshots/installer.png" alt="Installer" width="600">
-</p>
-
-The original files are backed up in the game folder, under `recaps_backup`.
-If Windows denies access to the game folder, right-click the installer and
-choose **Run as administrator**.
-
-> Download the archives from **Releases**. The **Code → Download ZIP** button
+> Download the archive from **Releases**. The **Code → Download ZIP** button
 > does not contain the installable mod.
+
+### Upgrading from v1.0
+
+Version 1.0 used an installer. Run its **Uninstall** first, then copy the new
+files as above.
 
 ## Uninstallation
 
-Run `Yakuza3 Recaps Installer.exe` and click **Uninstall**: the original files
-are put back, the videos and the backup folder are removed, and the game folder
-is exactly as it was before.
+Delete `version.dll` from the game folder. That is enough: the other files do
+nothing without it.
+
+To remove them too, delete `data/mvusm/Prologue_Ogre*.usm` and verify the game
+files in Steam (**Properties** → **Installed Files** → **Verify integrity of
+game files**).
 
 ## Compatibility
 
 The mod works with any PC copy of *Yakuza 3 Remastered* whose game files are
-unmodified, wherever it is installed. The installer does not look at where your
-copy comes from: it checks the code of `Yakuza3.exe` itself, and refuses to
-touch a different build or an executable already changed by another mod.
+unmodified, wherever it is installed. When the game starts, `version.dll`
+checks the game code in memory, and changes nothing if it is a different build.
 
 - All 4 game languages are supported (English, Japanese, Korean, Chinese).
 - If you have clear data, the title menu already has 9 options, the most the
   game can show: the recaps are not added in that case.
-- Verifying the game files or an update through Steam removes the mod: just
-  install it again.
+- Verifying the game files or an update through Steam puts the original
+  `scenario.bin` back: copy the `data` folder again.
 
 ## What the mod changes
 
-- **Title menu and recap playback** — a few bytes of `Yakuza3.exe`
+- **Title menu and recap playback** — `version.dll`, which patches the game in
+  memory (`Yakuza3.exe` is never modified)
 - **Recap scenario entries** — `data/scenario_xx/scenario.bin`
 - **The 8 recap videos** — `data/mvusm/`
 
 <details>
-<summary>Full list of files changed or added</summary>
+<summary>Full list of files added or replaced</summary>
 
-- `Yakuza3.exe` (231 bytes patched, the executable itself is not distributed)
+- `version.dll` (added)
 - `data/scenario_en/scenario.bin`
 - `data/scenario_ja/scenario.bin`
 - `data/scenario_ko/scenario.bin`
@@ -146,16 +147,19 @@ touch a different build or an executable already changed by another mod.
 ## How it works
 
 - The PS3 code that plays the recaps is still inside the PC executable: it just
-  could no longer be reached from the title menu. The mod opens the way again
-  by patching a few bytes of `Yakuza3.exe` on your PC.
+  could no longer be reached from the title menu.
+- The game loads `version.dll` from its own folder before the Windows one.
+  The mod's `version.dll` passes every call on to the real one from Windows,
+  and at startup patches a few places of the game code in memory to open the
+  way to the recaps again, after checking that every original byte is the one
+  it expects.
 - The recaps' scenario entries, removed from the Remastered release, are added
   back to `scenario.bin`.
 - The videos come from the PS3 version, repackaged in the format the PC version
   reads, without re-encoding.
 
-The installer's source code is in [`source/`](source/), with
-[build instructions](source/BUILD.txt). It only needs the C# compiler that
-ships with Windows.
+The source code of `version.dll` is in [`source/`](source/), with
+[build instructions](source/BUILD.txt).
 
 ## Report a problem
 
@@ -164,8 +168,8 @@ or contact me directly: **egld**.
 
 For a report to be useful, include:
 
-- your game version and where your copy comes from;
-- what the installer says, or what happens in game;
+- your game version;
+- what happens in game;
 - a screenshot or a video if possible.
 
 ## FAQ
@@ -174,30 +178,32 @@ For a report to be useful, include:
 
 Yes. The mod does not touch save files.
 
-### Windows says "Windows protected your PC". Is it safe?
+### Is the DLL safe?
 
-The installer is not digitally signed (a certificate costs money, so most mods
-are not). Click **More info**, then **Run anyway**. The full source code is in
-this repository.
+`version.dll` is flagged by none of the 71 antivirus engines on
+[VirusTotal](https://www.virustotal.com/gui/file/8f9f096c26f54f80e33805b55c2ff089996bc2ba143106ee379b89998447fdc5).
+Its full source code is in this repository, and building it gives the exact
+same file.
 
 ### The recaps do not show up in the title menu.
 
 If you have clear data, the menu already has 9 options and the recaps are not
-added. Otherwise, check that the installer says the recaps are installed in
-your copy of the game.
+added. Otherwise, check that `version.dll` is next to `Yakuza3.exe`, not in a
+subfolder.
+
+### The options are there, but the recaps do not play.
+
+The `data` folder was not copied over the game files. Copy it again and choose
+**Replace the files in the destination**.
 
 ### Is it compatible with other mods?
 
-Mods that change `Yakuza3.exe` or `scenario.bin` are not compatible: the
-installer detects them and changes nothing. Other mods are not affected.
-
-### Does it work on cracked or non-Steam copies?
-
-The installer checks the game's code, not where it comes from. If your game
-files are unmodified, it works.
+Mods that change `Yakuza3.exe` or `scenario.bin`, or that use their own
+`version.dll`, are not compatible. Mods loaded through other files are not
+affected.
 
 ## Disclaimer
 
 This is an unofficial fan mod, not affiliated with SEGA or Ryu Ga Gotoku
 Studio. *Yakuza*, *Yakuza 2* and *Yakuza 3* and their content belong to SEGA.
-The [MIT license](LICENSE) covers the installer's source code only.
+The [MIT license](LICENSE) covers the mod's source code only.
